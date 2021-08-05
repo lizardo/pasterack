@@ -15,16 +15,14 @@
 (define-runtime-path here-dir ".")
 (define-runtime-path tmp-dir "tmp")
 
-;(define pastebin-url "http://162.243.38.241:8000/")
-(define pastebin-url "http://pasterack.org/")
-;(define pastebin-url "http://143.198.140.118/")
+(define pastebin-url "http://localhost:8000/")
 (define paste-url-base (++ pastebin-url "pastes/"))
 (define racket-docs-url "http://docs.racket-lang.org/")
 (define racket-lang-url "http://racket-lang.org")
 (define racket-logo-url "http://racket-lang.org/logo.png")
 (define racket-irc-url "https://botbot.me/freenode/racket/")
 
-(define scrbl-exe "/home/pasterack/racket82/bin/scribble")
+(define scrbl-exe "scribble")
 
 (define PASTE-TITLE-DISPLAY-LEN 32) ; limit length of displayed title
 
@@ -44,17 +42,7 @@
   (putenv "PLT_TR_NO_OPTIMIZE" "1"))
 
 (define sample-pastes
-  '("8953" ; Sierpinski
-    "5563" ; Greek letters
-    "4837" ; lazy fib
-    "3259" ; scribble syntax
-    "8314" ; check-expect
-    "7435" ; #lang htdp/bsl + 2htdp/image
-    "3883" ; echo serv, test limits, and forms in racket but not racket/base
-    "7658" ; typed/racket
-    "97561"; plot
-    "29314"; fish pict
-    ))
+  '())
 
 (define sample-pastes-htmls
   (let ([ns (with-redis-connection
@@ -299,14 +287,14 @@
   '(link ([type "text/css"] [rel "stylesheet"]
           [href "http://fonts.googleapis.com/css?family=PT+Sans"])))
 (define scrbl-css/x
-  '(link ([type "text/css"] [rel "stylesheet"]
-          [href "http://pasterack.org/scribble.css"])))
+  `(link ([type "text/css"] [rel "stylesheet"]
+          [href ,(++ pastebin-url "scribble.css")])))
 (define scrbl-style-css/x
-  '(link ([type "text/css"] [rel "stylesheet"]
-          [href "http://pasterack.org/scribble-style.css"])))
+  `(link ([type "text/css"] [rel "stylesheet"]
+          [href ,(++ pastebin-url "scribble-style.css")])))
 (define rkt-css/x
-  '(link ([type "text/css"] [rel "stylesheet"]
-          [href "http://pasterack.org/racket.css"])))
+  `(link ([type "text/css"] [rel "stylesheet"]
+          [href ,(++ pastebin-url "racket.css")])))
 
 
 ;; generate SUBMIT button image
@@ -409,7 +397,7 @@
                               (++ paste-url-base fork-from) fork-from))))
             (br)
             (div ([class "g-recaptcha"] 
-                  [data-sitekey "6LdM0wYTAAAAAJPls_eNV28XvCRMeaf1cDoAV4Qx"])
+                  [data-sitekey ,RECAPTCHA-SITEKEY])
                  "Please check the box:"))
          (br)(br)(br)
          ;; middle bottom (part of middle) ------------------------------------
