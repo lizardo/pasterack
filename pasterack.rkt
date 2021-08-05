@@ -132,6 +132,7 @@
                             "(lambda () (namespace-anchor->namespace anchor)) "
                             "'(racket/pretty file/convertible))]\n"
            "                    [sandbox-path-permissions "
+                         ;; FIXME replace "/home/pasterack" with constant
                          "'([read \"/home/pasterack/pasterack/tmp/\"]\n"
                          ;; images seem to need access to the prefs file
                            "[read \"/home/pasterack/.racket/\"]\n"
